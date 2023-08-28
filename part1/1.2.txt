@@ -1,0 +1,90 @@
+EXERCISE 1.2: CLEANUP
+We have containers and an image that are no longer in use and are taking up space. Running "docker ps -as" and docker images will confirm this.
+
+Clean the Docker daemon by removing all images and containers.
+
+Submit the output for docker ps -a and docker images
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+C:\Users\Violeta>docker ps -as
+CONTAINER ID   IMAGE       COMMAND                  CREATED         STATUS                       PORTS                                    NAMES               SIZE
+2f9576d98eae   zookeeper   "/docker-entrypoint.…"   4 minutes ago   Up 4 minutes                 2181/tcp, 2888/tcp, 3888/tcp, 8080/tcp   nifty_rubin         33kB (virtual 313MB)
+fcdd991aa331   tomcat      "catalina.sh run"        4 minutes ago   Exited (143) 2 minutes ago                                            musing_lovelace     5.13kB (virtual 426MB)
+5af5fe883a8e   nginx       "/docker-entrypoint.…"   4 minutes ago   Exited (0) 2 minutes ago                                              unruffled_vaughan   1.09kB (virtual 187MB)
+
+C:\Users\Violeta>docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+tomcat       latest    b0a197eea51c   2 days ago    426MB
+zookeeper    latest    50d24e0c3296   11 days ago   313MB
+nginx        latest    eea7b3dcba7e   12 days ago   187MB
+
+
+C:\Users\Violeta>docker container prune
+WARNING! This will remove all stopped containers.
+Are you sure you want to continue? [y/N] y
+Deleted Containers:
+fcdd991aa33184e48ba59d2fe552c58383b1c99138c34b878fa000870c27c9ad
+5af5fe883a8eb94e98e4dcf9949dbbe46b7e973c00afe4a26eff913d04926b2b
+
+Total reclaimed space: 6.219kB
+
+C:\Users\Violeta>docker ps -as
+CONTAINER ID   IMAGE       COMMAND                  CREATED         STATUS         PORTS                                    NAMES         SIZE
+2f9576d98eae   zookeeper   "/docker-entrypoint.…"   9 minutes ago   Up 9 minutes   2181/tcp, 2888/tcp, 3888/tcp, 8080/tcp   nifty_rubin   33kB (virtual 313MB)
+
+C:\Users\Violeta>docker container stop nifty_rubin
+nifty_rubin
+
+C:\Users\Violeta>docker container prune
+WARNING! This will remove all stopped containers.
+Are you sure you want to continue? [y/N] y
+Deleted Containers:
+2f9576d98eae50b283520554861e7b529c46d94e6844ed3b501f2ed728f58db6
+
+Total reclaimed space: 225B
+
+C:\Users\Violeta>docker image prune -a
+WARNING! This will remove all images without at least one container associated to them.
+Are you sure you want to continue? [y/N] y
+Deleted Images:
+untagged: zookeeper:latest
+untagged: zookeeper@sha256:53dd7d29b8ad0cbec1a91a3abe8ae72068d25b141e26b4f4a747ba3a90ddbe88
+deleted: sha256:50d24e0c3296997785bb9acad13d13aa4d7074adf85bb2042e28c3ab1d17f368
+deleted: sha256:f59c11e63631f08ca001ab104d2ee619688a7ec781ae92845e5b99b735492648
+deleted: sha256:2080a1c476e67e8a9e9d4ee5f13cfd40e37293edafcd0e596a7439c0a754b420
+deleted: sha256:869a0cef9a99710f8ea25f50ae707c3a3d5275ac2ec9e589ae17968f9f3a9085
+deleted: sha256:66e62ab6cb55b4d0d12a071df4a484be181e3dd1bc78f8538707f94485c2daec
+deleted: sha256:1411d52f98633a5eb2f234eccadce9c64d0f5b51ab33d95f9937918b262794df
+deleted: sha256:05ea1405fe547bf1463fa1048029ccbbc5781b1b66e4036cba13d832e925181d
+deleted: sha256:6853c936f00ff972f2140ca6476fed7ddd0c64bd8e88f59ee7d3830406cf4475
+deleted: sha256:cf9fea6686931ff0b292b254ac41fb162bb55722e1338498432f30d436189fa5
+untagged: nginx:latest
+untagged: nginx@sha256:104c7c5c54f2685f0f46f3be607ce60da7085da3eaa5ad22d3d9f01594295e9c
+deleted: sha256:eea7b3dcba7ee47c0d16a60cc85d2b977d166be3960541991f3e6294d795ed24
+deleted: sha256:589bcc284f24d6548cd3cef06ace5f6ebc4f23a48a5763f2f9d3d30b0f9dadf5
+deleted: sha256:b3addc7069fafd183d88d1a40bb3dfe51227d45e4fe8e59b81a2fda7614ebbc1
+deleted: sha256:5bf28af6a2188fa2d657e451213761b03e115e4c24ee72c41da34a241fe81ca1
+deleted: sha256:2496134da21702d935bee1334ae42baf26d0197af91275e5c1a11eee31299121
+deleted: sha256:c7e60968a54882c23483c3acb0ff1f415ce0f98184dfbed3fb9080447d79b313
+deleted: sha256:49bfd4a4ea578aefcacdfd87efdc4999d6a4e4b7f00322484cac67ff7671389e
+deleted: sha256:511780f88f80081112aea1bfdca6c800e1983e401b338e20b2c6e97f384e4299
+untagged: tomcat:latest
+untagged: tomcat@sha256:3a9c96f31a17352f953bc8b2dce0d98a152432970f42021b8e39596810b33ab4
+deleted: sha256:b0a197eea51ca1b2c850bd768ae0e2b48e6ce057cfaba9d903fb0ca833d602df
+deleted: sha256:98081f8dff6bb15b23697c07fbd7ad6e923883a0c163b816b0b634bca5d874ee
+deleted: sha256:f08b5f552d0cdb3a8e279f9b3da139c156a72233552ef909b6b7800ec74e4566
+deleted: sha256:13243ee988efa00262a007dd8263ad09c64b785ae58807f5872d49d64eb91f85
+deleted: sha256:472dfaa81b1e0dc336b94930676b60c22bd58ce4280ffa1d8b6e7562933318cc
+deleted: sha256:c7a2b87ecd9fdbe64ea1b37df63d86dbf28a0c587b7a68a3ebe265eb0d557e86
+deleted: sha256:dde8566af2ad84702d4c0bf7d61251ecfd060afc5101febdec61a736280c4ec4
+deleted: sha256:23e101c228921043e936fd303277514c6fa5b5af490afa4f1d0a88b6aa49d247
+deleted: sha256:bce45ce613d34bff6a3404a4c2d56a5f72640f804c3d0bd67e2cf0bf97cb950c
+
+Total reclaimed space: 847.2MB
+
+C:\Users\Violeta>docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+
+C:\Users\Violeta>docker ps -as
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES     SIZE
