@@ -1,0 +1,21 @@
+FROM node:16
+
+EXPOSE 5000
+
+# convention
+WORKDIR /usr/src/app
+
+# Copy all of the source code
+COPY . .
+
+# Set environment variable to connect to backend
+ENV REACT_APP_BACKEND_URL=http://localhost:8080
+
+# Install dependencies and build project
+RUN npm install
+RUN npm run build
+RUN npm install -g serve
+
+
+# Serve app
+CMD ["serve", "-s", "-l", "5000", "build"]
