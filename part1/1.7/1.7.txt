@@ -1,0 +1,87 @@
+EXERCISE 1.7: IMAGE FOR SCRIPT
+We can improve our previous solutions now that we know how to create and build a Dockerfile.
+
+Let us now get back to Exercise 1.4.
+
+Create a new file on your local machine with and append the script we used previously into that file:
+
+while true
+do
+  echo "Input website:"
+  read website; echo "Searching.."
+  sleep 1; curl http://$website
+done
+
+Create a Dockerfile for a new image that starts from ubuntu:20.04 and add instructions to install curl into that image. Then add instructions to copy the script file into that image and finally set it to run on container start using CMD.
+
+After you have filled the Dockerfile, build the image with the tag "curler".
+
+If you are getting permission denied, use chmod to give permission to run the script.
+The following should now work:
+
+$ docker run -it curler
+
+  Input website:
+  helsinki.fi
+  Searching..
+  <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+  <html><head>
+  <title>301 Moved Permanently</title>
+  </head><body>
+  <h1>Moved Permanently</h1>
+  <p>The document has moved <a href="https://www.helsinki.fi/">here</a>.</p>
+  </body></html>
+
+Remember that RUN can be used to execute commands while building the image!
+
+Submit the Dockerfile.
+
+-------------------
+-------------------
+C:\Users\Violeta\Documents\dev\docker-mooc.fi\part1\1.7>docker build . -t curler
+[+] Building 14.7s (9/9) FINISHED
+ => [internal] load build definition from Dockerfile                                                               0.0s
+ => => transferring dockerfile: 620B                                                                               0.0s
+ => [internal] load .dockerignore                                                                                  0.0s
+ => => transferring context: 2B                                                                                    0.0s
+ => [internal] load metadata for docker.io/library/ubuntu:20.04                                                    1.2s
+ => [1/4] FROM docker.io/library/ubuntu:20.04@sha256:33a5cc25d22c45900796a1aca487ad7a7cb09f09ea00b779e3b2026b4fc2  0.0s
+ => [internal] load build context                                                                                  0.0s
+ => => transferring context: 30B                                                                                   0.0s
+ => CACHED [2/4] WORKDIR /usr/src/app                                                                              0.0s
+ => CACHED [3/4] COPY script.sh .                                                                                  0.0s
+ => [4/4] RUN apt update && apt-get install -y curl                                                               13.1s
+ => exporting to image                                                                                             0.3s
+ => => exporting layers                                                                                            0.3s
+ => => writing image sha256:93750d1b0a8d7050791fe08e9d09711201c73183f159c6cdb22dbd21d125283f                       0.0s
+ => => naming to docker.io/library/curler                                                                          0.0s
+
+Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
+
+C:\Users\Violeta\Documents\dev\docker-mooc.fi\part1\1.7>docker images
+REPOSITORY                          TAG       IMAGE ID       CREATED          SIZE
+curler                              latest    93750d1b0a8d   40 seconds ago   135MB
+hello-docker                        latest    a43f123aa29a   4 days ago       5.62MB
+ubuntu                              latest    01f29b872827   4 weeks ago      77.8MB
+devopsdockeruh/simple-web-service   ubuntu    4e3362e907d5   2 years ago      83MB
+devopsdockeruh/simple-web-service   alpine    fd312adc88e0   2 years ago      15.7MB
+devopsdockeruh/pull_exercise        latest    d9854bc0e13a   4 years ago      75.3MB
+
+C:\Users\Violeta\Documents\dev\docker-mooc.fi\part1\1.7>docker run curler
+Input website:
+Searching..
+curl: (3) URL using bad/illegal format or missing URL
+Input website:
+Searching..
+
+C:\Users\Violeta\Documents\dev\docker-mooc.fi\part1\1.7>docker run -it curler
+Input website:
+helsinki.fi
+Searching..
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+<hr><center>nginx/1.22.1</center>
+</body>
+</html>
