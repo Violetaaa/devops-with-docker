@@ -1,0 +1,50 @@
+MANDATORY EXERCISE 1.12: HELLO, FRONTEND!
+A good developer creates well-written READMEs. Such that they can be used to create Dockerfiles with ease.
+
+Clone, fork or download the project from https://github.com/docker-hy/material-applications/tree/main/example-frontend.
+
+Create a Dockerfile for the project (example-frontend) and give a command so that the project runs in a Docker container with port 5000 exposed and published so when you start the container and navigate to http://localhost:5000 you will see message if you're successful.
+
+note that the port 5000 is reserved in the more recent OSX versions (Monterey, Big Sur), so you have to use some other host port
+Submit the Dockerfile.
+
+------------------
+------------------
+C:\Users\Violeta\Documents\dev\docker-mooc.fi\part1\1.12\example-frontend>docker build . --no-cache  -t front-project && docker run -p 5000:5000 front-project
+[+] Building 167.6s (11/11) FINISHED
+ => [internal] load build definition from Dockerfile                                                            0.0s
+ => => transferring dockerfile: 332B                                                                            0.0s
+ => [internal] load .dockerignore                                                                               0.0s
+ => => transferring context: 34B                                                                                0.0s
+ => [internal] load metadata for docker.io/library/node:16                                                      0.9s
+ => [1/6] FROM docker.io/library/node:16@sha256:818b5adc1ee4a04e8ad5efeb70871571efe414315ad7f16844f24f9962ffdc  0.0s
+ => [internal] load build context                                                                               0.0s
+ => => transferring context: 1.21kB                                                                             0.0s
+ => CACHED [2/6] WORKDIR /usr/src/app                                                                           0.0s
+ => [3/6] COPY . .                                                                                              0.1s
+ => [4/6] RUN npm install                                                                                     130.2s
+ => [5/6] RUN npm run build                                                                                    16.8s
+ => [6/6] RUN npm install -g serve                                                                              7.9s
+ => exporting to image                                                                                         11.4s
+ => => exporting layers                                                                                        11.4s
+ => => writing image sha256:602c1239984d937af1394cf50969bf19483e5b1404bdcae6634016bb28bc2e70                    0.0s
+ => => naming to docker.io/library/front-project                                                                0.0s
+
+Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
+ INFO  Accepting connections at http://localhost:5000
+ HTTP  9/3/2023 12:47:56 PM 172.17.0.1 GET /
+ HTTP  9/3/2023 12:47:56 PM 172.17.0.1 Returned 200 in 31 ms
+ HTTP  9/3/2023 12:47:56 PM 172.17.0.1 GET /static/css/main.9ee2e4df.chunk.css
+ HTTP  9/3/2023 12:47:56 PM 172.17.0.1 Returned 200 in 5 ms
+ HTTP  9/3/2023 12:47:56 PM 172.17.0.1 GET /static/js/main.dbc0b0a4.chunk.js
+ HTTP  9/3/2023 12:47:56 PM 172.17.0.1 GET /static/js/2.43ca3586.chunk.js
+ HTTP  9/3/2023 12:47:56 PM 172.17.0.1 Returned 200 in 12 ms
+ HTTP  9/3/2023 12:47:56 PM 172.17.0.1 Returned 200 in 14 ms
+ HTTP  9/3/2023 12:47:56 PM 172.17.0.1 GET /static/media/toskalogo.c0f35cf0.svg
+ HTTP  9/3/2023 12:47:56 PM 172.17.0.1 Returned 200 in 4 ms
+ HTTP  9/3/2023 12:47:56 PM 172.17.0.1 GET /manifest.json
+ HTTP  9/3/2023 12:47:56 PM 172.17.0.1 Returned 200 in 4 ms
+ HTTP  9/3/2023 12:47:56 PM 172.17.0.1 GET /favicon.ico
+ HTTP  9/3/2023 12:47:56 PM 172.17.0.1 Returned 200 in 3 ms
+ HTTP  9/3/2023 12:48:01 PM 172.17.0.1 GET /api/ping
+ HTTP  9/3/2023 12:48:01 PM 172.17.0.1 Returned 200 in 3 ms
