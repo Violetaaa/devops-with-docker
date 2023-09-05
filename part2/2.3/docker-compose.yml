@@ -1,0 +1,12 @@
+version: "3"
+services:
+  back:
+    image: back-project
+    build: .
+    ports:
+      - 8080:8080
+  front:
+    image: front-project
+    build: .
+    ports:
+      - 5000:5000
