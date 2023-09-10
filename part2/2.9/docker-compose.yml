@@ -4,6 +4,7 @@ services:
 
   back:
     image: back-project
+    build: ./example-backend
     ports:
       - 8080:8080
     environment:
@@ -12,12 +13,15 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DATABASE=postgres
-      - REQUEST_ORIGIN=http://localhost/
+      - REQUEST_ORIGIN=http://localhost
 
   front:
     image: front-project
+    build: ./example-frontend
     ports:
       - 5000:5000
+    environment:
+      REACT_APP_BACKEND_URL: http://localhost:80/api/
 
   redis:
     image: redis:7
