@@ -1,0 +1,27 @@
+FROM golang:1.16
+
+EXPOSE 8080
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+# Build project
+RUN go build
+
+# Run tests
+RUN go test ./...
+
+ENV REQUEST_ORIGIN=http://localhost/
+
+## 3.5
+# command adduser, because image is based on alpine that doesn't support useradd
+RUN adduser appuser
+
+# change user, all commands after this line will be executed as appuser
+USER appuser
+#
+
+# Execute project
+CMD ["./server"]
+

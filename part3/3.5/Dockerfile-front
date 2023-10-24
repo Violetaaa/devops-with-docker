@@ -1,0 +1,31 @@
+FROM node:16
+
+EXPOSE 5000
+
+# convention
+WORKDIR /usr/src/app
+
+# Copy all of the source code
+COPY . .
+
+# Install dependencies and build project
+RUN npm install
+
+ENV REACT_APP_BACKEND_URL=http://localhost:8080
+
+RUN npm run build
+RUN npm install -g serve
+
+## 3.5
+# create a non-root user
+RUN useradd -m appuser
+
+# change the owner of current dir to appuser
+RUN chown appuser .
+
+# change user
+USER appuser
+##
+
+# Serve app
+CMD ["serve", "-s", "-l", "5000", "build"]
